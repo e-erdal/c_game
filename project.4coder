@@ -1,0 +1,40 @@
+version(1);
+
+project_name = "C Game";
+
+patterns = {
+	"*.c",
+	"*.h",
+	"*.txt",
+	"*.4coder"
+};
+
+load_paths = {
+	{ { { ".src/", .relative = true, .recursive = true, } }, .os = "win" } 
+};
+
+command_list = {
+	{ .name = "configure",
+	  .out = "*configure*", .footer_panel = true, .save_dirty_files = false, .cursor_at_emd = true,
+	  .cmd = {
+		{ "cmake -B ./build -DCMAKE_DEBUG_POSTFIX=d -G Ninja", .os = "win" },
+	  },
+	},
+	{ .name = "build",
+	  .out = "*build*", .footer_panel = true, .save_dirty_files = false, .cursor_at_end = true,
+	  .cmd = {
+		{ "cmake --build ./build --target all --config Debug", .os = "win" },
+	  },
+	},
+
+	{ .name = "run",
+	  .out = "*run*", .footer_panel = true, .save_dirty_files = false, .cursor_at_end = true,
+	  .cmd = {
+		{"./build/game.exe", .os = "win" }, 
+	  },
+	},
+};
+
+fkey_command[4] = "configure";
+fkey_command[5] = "build";
+fkey_command[6] = "run";
